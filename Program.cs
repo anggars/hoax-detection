@@ -1,43 +1,90 @@
-﻿// Import library yang kita butuhkan
-using System;
+﻿using System;
 using System.IO;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 
-// Ini adalah "cetakan" untuk INPUT data kita (data dari CSV)
 public class HoaxData
 {
-    // [LoadColumn(3)] artinya: ambil data dari kolom ke-3 (indeks 3) di CSV
-    // Kolom ke-3 adalah 'flag' (SALAH, MISLEADING, dll)
     [LoadColumn(3)]
     public string Flag { get; set; }
 
-    // [LoadColumn(5)] artinya: ambil data dari kolom ke-5 (indeks 5) di CSV
-    // Kolom ke-5 adalah 'post_text' (isi teks beritanya)
     [LoadColumn(5)]
     public string PostText { get; set; }
 }
 
-// Ini adalah "cetakan" untuk OUTPUT data kita (hasil prediksi model)
 public class HoaxPrediction
 {
-    // [ColumnName("PredictedLabel")] adalah nama default ML.NET untuk hasil prediksi
     [ColumnName("PredictedLabel")]
     public string PredictedFlag { get; set; }
 
-    // Kita juga akan minta skor probabilitasnya
     public float[] Score { get; set; }
 }
 
-// Ini adalah program utama kita
 class Program
 {
+    private static readonly string _dataPath = Path.Combine(Environment.CurrentDirectory, "idn-turnbackhoax-2025.csv");
+
     static void Main(string[] args)
     {
-        // Program kita akan mulai di sini.
-        // Untuk sekarang, kita kosongkan dulu.
         Console.WriteLine("Proyek Deteksi Hoax ML.NET Dimulai...");
 
-        // Nanti kita akan panggil fungsi training model di sini
+        var context = new MLContext(seed: 0);
+
+        Console.WriteLine($"Loading data from: {_dataPath}");
+        var dataView = context.Data.LoadFromTextFile<HoaxData>(
+            path: _dataPath,
+            hasHeader: true,
+            separatorChar: ';',
+            allowQuoting: true
+        );
+
+        var trainTestData = context.Data.TrainTestSplit(dataView, testFraction: 0.2, seed: 0);
+        var trainData = trainTestData.TrainSet;
+        var testData = trainTestData.TestSet;
+
+        Console.WriteLine("Membangun pipeline...");
+        var pipeline =
+            context.Transforms.Conversion.MapValueToKey(inputColumnName: "Flag", outputColumnName: "Label")
+            .Append(context.Transforms.Text.FeaturizeText(inputColumnName: "PostText", outputColumnName: "Features"))
+            .Append(context.MulticlassClassification.Trainers.SdcaMaximumEntropy(labelColumnName: "Label", featureColumnName: "Features"))
+            .Append(context.Transforms.Conversion.MapKeyToValue(outputColumnName: "PredictedLabel", inputColumnName: "PredictedLabel"));
+
+        Console.WriteLine("Mulai Training Model... (Ini mungkin butuh beberapa detik)");
+        var model = pipeline.Fit(trainData);
+        Console.WriteLine("Model selesai di-training.");
+
+        Console.WriteLine("Mulai Evaluasi Model dengan data test...");
+        var predictions = model.Transform(testData);
+        var metrics = context.MulticlassClassification.Evaluate(predictions, "Label", "Score", "PredictedLabel");
+
+        Console.WriteLine("==================================================");
+        Console.WriteLine("       HASIL EVALUASI MODEL (METRICS)");
+        Console.WriteLine("==================================================");
+        Console.WriteLine($"  MicroAccuracy:    {metrics.MicroAccuracy:P2}");
+        Console.WriteLine($"  MacroAccuracy:    {metrics.MacroAccuracy:P2}");
+        Console.WriteLine($"  LogLoss:          {metrics.LogLoss:F4}");
+        Console.WriteLine($"\n  (MicroAccuracy adalah Akurasi Keseluruhan)");
+        Console.WriteLine("==================================================");
+        Console.WriteLine("\nSCREENSHOT HASIL DI ATAS UNTUK DOKUMEN PERANCANGAN!");
+
+        Console.WriteLine("\nMembuat 1 contoh prediksi...");
+        var predictionEngine = context.Model.CreatePredictionEngine<HoaxData, HoaxPrediction>(model);
+        var sampleData = new HoaxData()
+        {
+            PostText = "Ini contoh kasus, ketidakadilan kpd konsumen. Mie Gacoan disegel , infonya disebabkan mengandung🐖 Babi ??"
+        };
+
+        var predictionResult = predictionEngine.Predict(sampleData);
+
+        Console.WriteLine("\n==================================================");
+        Console.WriteLine("         HASIL PREDIKSI 1 DATA CONTOH");
+        Console.WriteLine("==================================================");
+        Console.WriteLine($"  Teks Berita: {sampleData.PostText}");
+        Console.WriteLine($"  Prediksi Flag: {predictionResult.PredictedFlag}");
+        Console.WriteLine("==================================================");
+
+        context.Model.Save(model, dataView.Schema, "hoax_detection_model.zip");
+        Console.WriteLine("\nModel telah disimpan ke file: hoax_detection_model.zip");
+        Console.WriteLine("Proses Selesai.");
     }
 }
