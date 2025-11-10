@@ -1,3 +1,9 @@
+C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.csproj.AssemblyReference.cache
+C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.AssemblyInfoInputs.cache
+C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.AssemblyInfo.cs
+C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.csproj.CoreCompileInputs.cache
+C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.sourcelink.json
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\bin\Debug\net9.0\hoax-detection.exe
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\bin\Debug\net9.0\hoax-detection.deps.json
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\bin\Debug\net9.0\hoax-detection.runtimeconfig.json
@@ -27,12 +33,6 @@ C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\bin\Debug\net9.0\
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\bin\Debug\net9.0\runtimes\win-arm64\native\LdaNative.dll
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\bin\Debug\net9.0\runtimes\win-x64\native\LdaNative.dll
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\bin\Debug\net9.0\runtimes\win-x86\native\LdaNative.dll
-C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.csproj.AssemblyReference.cache
-C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.AssemblyInfoInputs.cache
-C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.AssemblyInfo.cs
-C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.csproj.CoreCompileInputs.cache
-C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.sourcelink.json
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-det.EE76D184.Up2Date
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\hoax-detection.dll
 C:\Users\DELL\OneDrive\Dokumen\Machine Learning\hoax-detection\obj\Debug\net9.0\refint\hoax-detection.dll

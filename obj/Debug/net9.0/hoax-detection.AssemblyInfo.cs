@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("hoax-detection")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2eeaf6dcf74ac1c9b97951055587d5a65915e8bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0fc7aeb7b5f104c2d7da1676a08c6812213c47f3")]
 [assembly: System.Reflection.AssemblyProductAttribute("hoax-detection")]
 [assembly: System.Reflection.AssemblyTitleAttribute("hoax-detection")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
